@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Data_Structures
+﻿namespace Data_Structures
 {
+    using System;
+
     public class SinglyLinkedList
     {
         SinglyLinkedListNode node;
@@ -125,11 +125,107 @@ namespace Data_Structures
                 return false;
         }
 
-        // 1 2 3 4 5 6 null
         static int GetLastNthNode(SinglyLinkedListNode head, int n)
         {
-            if(head.next == null)
+            SinglyLinkedListNode node1, node2;
+            node1 = head;
 
+            while(n-- > 0)
+            {
+                node1 = node1.next;
+            }
+
+            node2 = head;
+
+            while (node1.next != null)
+            {
+                node1 = node1.next;
+                node2 = node2.next;
+            }
+
+            return node2.data;
+        }
+
+        static SinglyLinkedListNode RemoveDuplicateFromSortedList(SinglyLinkedListNode head)
+        {
+            SinglyLinkedListNode top = head;
+
+            while (top != null)
+            {
+                while (top.data == top.next.data || top.next != null)
+                {
+                    top.next = top.next.next;
+                }
+
+                top = top.next;
+            }
+
+            return head;
+        }
+
+        static SinglyLinkedListNode MergeSortedLists(SinglyLinkedListNode list1, SinglyLinkedListNode list2)
+        {
+            SinglyLinkedListNode node, head;
+
+            if (list1.data < list2.data)
+            {
+                node = list1;
+                list1 = list1.next;
+            }
+            else
+            {
+                node = list2;
+                list2 = list2.next;
+            }
+
+            head = node;
+
+            while (list1 != null || list2 != null)
+            {
+                if (list1.data < list2.data)
+                {
+                    node.next = list1;
+                    list1 = list1.next;
+                }
+                else
+                {
+                    node.next = list2;
+                    list2 = list2.next;
+                }
+                node = node.next;
+
+            }
+
+            if (list1 != null)
+                node.next = list1;
+            else
+                node.next = list2;
+
+            return head;
+        }
+
+        static bool ContainsCycle(SinglyLinkedListNode head)
+        {
+            SinglyLinkedListNode fast = head.next, slow = head;
+
+            while (true)
+            {
+                if (fast == slow)
+                {
+                    return true;
+                }
+
+                if (fast == null || fast.next == null)
+                {
+                    break;
+                }
+
+                fast = fast.next.next;
+                slow = slow.next;
+
+            }
+
+            return false;
         }
 
     }
@@ -138,6 +234,6 @@ namespace Data_Structures
     {
         internal SinglyLinkedListNode next;
         internal int data;
-    }
+    } 
 
 }
