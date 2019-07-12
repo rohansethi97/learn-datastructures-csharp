@@ -228,6 +228,61 @@
             return false;
         }
 
+        public static int GetLength(SinglyLinkedListNode head)
+        {
+            int count = 0;
+
+            while (head != null)
+            {
+                count++;
+                head = head.next;
+            }
+
+            return count;
+        }
+
+        public static int GetMergePointOfTwoLists(SinglyLinkedListNode first, SinglyLinkedListNode second)
+        {
+            int countFirst = GetLength(first);
+            int countSecond = GetLength(second);
+
+            SinglyLinkedListNode primary, secondary;
+            int diff;
+
+            if (countFirst > countSecond)
+            {
+                primary = first;
+                secondary = second;
+                diff = countFirst - countSecond;
+            }
+            else
+            {
+                primary = second;
+                secondary = first;
+                diff = countSecond - countFirst;
+
+            }
+
+            while (diff-- > 0)
+            {
+                primary = primary.next;
+            }
+
+            while (primary != null && secondary != null)
+            {
+                if (primary == secondary)
+                {
+                    return primary.data;
+                }
+
+                primary = primary.next;
+                secondary = secondary.next;
+            }
+
+            return 0;
+        }
+
+
     }
 
     public class SinglyLinkedListNode
